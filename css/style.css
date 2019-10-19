@@ -7,11 +7,16 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
+h4 {
+  font-weight: bold;
+  padding-bottom: 5px;
+}
+
 .balloon {
   width: 100px;
   height: 200px;
   position: absolute;
-  top: 100vh;
+  top: 70vh;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -40,7 +45,8 @@ body {
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.6);
-  display: flex;
+  /* display: flex; */
+  display: none;
   justify-content: center;
   align-items: center;
   z-index: 1000;
@@ -49,13 +55,13 @@ body {
 
 .total-block {
   background: #fff;
-  padding: 10px 100px 40px;
+  padding: 20px 100px 40px;
   border-radius: 10px;
   text-align: center;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
 }
 
-.win {
+.lose {
   display: none;
 }
 
