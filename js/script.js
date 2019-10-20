@@ -21,9 +21,14 @@ animateBalloon = elem => {
   function frame() {
     if (pos >= windowHeight + 200) {
       clearInterval(interval);
+      deleteBalloon(elem);
     } else {
       pos++;
       elem.style.top = windowHeight - pos + 'px';
     }
   }
+};
+
+deleteBalloon = elem => {
+  elem.remove();
 };
