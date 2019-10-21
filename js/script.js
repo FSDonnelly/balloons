@@ -8,6 +8,8 @@ let winTotal = 100;
 let currentBalloon = 0;
 let gameOver = false;
 let totalShadow = document.querySelector('.total-shadow');
+// let music = new Audio('sounds/bg-music.mp3');
+let startBtn = document.querySelector('.start-game-button');
 
 createBalloon = () => {
   let div = document.createElement('div');
@@ -52,6 +54,11 @@ playBallSound = () => {
   audio.play();
 };
 
+// playMusic = async () => {
+//   music.loop = true;
+//   await music.play();
+// };
+
 deleteBalloon = elem => {
   elem.remove();
   numPopped++;
@@ -87,6 +94,7 @@ startGame = () => {
 };
 
 restartGame = () => {
+  // playMusic();
   let removeBalloons = document.querySelectorAll('.balloon');
   for (let i = 0; i < removeBalloons.length; i++) {
     const element = removeBalloons[i];
@@ -121,4 +129,8 @@ document.querySelector('.cancel').addEventListener('click', () => {
   totalShadow.style.display = 'none';
 });
 
-startGame();
+startBtn.addEventListener('click', () => {
+  startGame();
+  document.querySelector('.bg-music').play();
+  document.querySelector('.start-game-window').style.display = 'none';
+});
