@@ -56,6 +56,7 @@ updateScore = () => {
 };
 
 startGame = () => {
+  restartGame();
   let loop = setInterval(() => {
     if (!gameOver && numPopped !== winTotal) {
       createBalloon();
@@ -71,12 +72,39 @@ startGame = () => {
   }, 800);
 };
 
+restartGame = () => {
+  let removeBalloons = document.querySelectorAll('.balloon');
+  for (let i = 0; i < removeBalloons.length; i++) {
+    const element = removeBalloons[i];
+    element.remove();
+  }
+  gameOver = false;
+  numPopped = 0;
+  updateScore();
+};
+
 document.addEventListener('click', e => {
   if (e.target.classList.contains('balloon')) {
     deleteBalloon(e.target);
-
-    console.log(numPopped);
   }
+});
+
+document.querySelector('.restart-win').addEventListener('click', () => {
+  totalShadow.style.display = 'none';
+  totalShadow.querySelector('.win').style.display = 'none';
+  totalShadow.querySelector('.lose').style.display = 'none';
+  startGame();
+});
+
+document.querySelector('.restart').addEventListener('click', () => {
+  totalShadow.style.display = 'none';
+  totalShadow.querySelector('.win').style.display = 'none';
+  totalShadow.querySelector('.lose').style.display = 'none';
+  startGame();
+});
+
+document.querySelector('.cancel').addEventListener('click', () => {
+  totalShadow.style.display = 'none';
 });
 
 startGame();
