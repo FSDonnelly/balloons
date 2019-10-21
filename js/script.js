@@ -6,6 +6,8 @@ let scores = document.querySelectorAll('.score');
 let numPopped = 0;
 let winTotal = 10;
 let currentBalloon = 0;
+let gameOver = false;
+let totalShadow = document.querySelector('.total-shadow');
 
 createBalloon = () => {
   let div = document.createElement('div');
@@ -26,9 +28,13 @@ animateBalloon = elem => {
   let interval = setInterval(frame, 10);
 
   function frame() {
-    if (pos >= windowHeight + 200) {
+    if (
+      pos >= windowHeight + 200 &&
+      document.querySelector('[data-number="' + elem.dataset.number + '"]') !==
+        null
+    ) {
       clearInterval(interval);
-      deleteBalloon(elem);
+      gameOver = true;
     } else {
       pos++;
       elem.style.top = windowHeight - pos + 'px';
@@ -38,6 +44,8 @@ animateBalloon = elem => {
 
 deleteBalloon = elem => {
   elem.remove();
+  numPopped++;
+  updateScore();
 };
 
 updateScore = () => {
@@ -47,11 +55,28 @@ updateScore = () => {
   }
 };
 
+startGame = () => {
+  let loop = setInterval(() => {
+    if (!gameOver && numPopped !== winTotal) {
+      createBalloon();
+    } else if (numPopped !== winTotal) {
+      clearInterval(loop);
+      totalShadow.style.display = 'flex';
+      totalShadow.querySelector('.lose').style.display = 'block';
+    } else {
+      clearInterval(loop);
+      totalShadow.style.display = 'flex';
+      totalShadow.querySelector('.win').style.display = 'block';
+    }
+  }, 800);
+};
+
 document.addEventListener('click', e => {
   if (e.target.classList.contains('balloon')) {
     deleteBalloon(e.target);
-    numPopped++;
-    updateScore();
+
     console.log(numPopped);
   }
 });
+
+startGame();
