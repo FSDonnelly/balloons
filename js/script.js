@@ -4,7 +4,7 @@ let windowHeight = window.innerHeight;
 let body = document.body;
 let scores = document.querySelectorAll('.score');
 let numPopped = 0;
-let winTotal = 10;
+let winTotal = 100;
 let currentBalloon = 0;
 let gameOver = false;
 let totalShadow = document.querySelector('.total-shadow');
@@ -25,7 +25,11 @@ createBalloon = () => {
 
 animateBalloon = elem => {
   let pos = 0;
-  let interval = setInterval(frame, 10);
+  let randSpeed = Math.floor(Math.random() * 6 - 3);
+  let interval = setInterval(
+    frame,
+    12 - Math.floor(numPopped / 10) + randSpeed
+  );
 
   function frame() {
     if (
@@ -42,10 +46,17 @@ animateBalloon = elem => {
   }
 };
 
+playBallSound = () => {
+  let audio = document.createElement('audio');
+  audio.src = 'sounds/pop.mp3';
+  audio.play();
+};
+
 deleteBalloon = elem => {
   elem.remove();
   numPopped++;
   updateScore();
+  playBallSound();
 };
 
 updateScore = () => {
@@ -57,7 +68,10 @@ updateScore = () => {
 
 startGame = () => {
   restartGame();
+  let timeout = 0;
+
   let loop = setInterval(() => {
+    timeout = Math.floor(Math.random() * 600 - 100);
     if (!gameOver && numPopped !== winTotal) {
       createBalloon();
     } else if (numPopped !== winTotal) {
@@ -69,7 +83,7 @@ startGame = () => {
       totalShadow.style.display = 'flex';
       totalShadow.querySelector('.win').style.display = 'block';
     }
-  }, 800);
+  }, 800 + timeout);
 };
 
 restartGame = () => {
